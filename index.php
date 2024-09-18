@@ -25,27 +25,15 @@ if (isset($_POST['tmbh_dakos'])) {
     }
 }
 
-// Proses Edit Data
-if (isset($_POST['edit_dakos'])) {
-    $id_dakos = $_POST['id_dakos'];
-    $JP_start = $_POST['edit_jam_pertama'];
-    $JP_end = $_POST['edit_jam_terakhir'];
-    $JP = "$JP_start-$JP_end";
-    $id_ruang = $_POST['edit_id_ruang'];
-    $id_mapel = $_POST['edit_id_mapel'];
-    $id_kelas = $_POST['edit_id_kelas'];
-    $id_guru = $_POST['edit_id_guru'];
-    $note = $_POST['edit_note'];
+if (isset($_GET['hapus_dakos'])) {
+    $id_dakos = $_GET['hapus_dakos'];
 
-    $sql = "UPDATE Dakos 
-            SET JP = '$JP', id_ruang = '$id_ruang', id_mapel = '$id_mapel', id_kelas = '$id_kelas', id_guru = '$id_guru', note = '$note'
-            WHERE id_dakos = '$id_dakos'";
-
+    $sql = "DELETE FROM Dakos WHERE id_dakos = '$id_dakos'";
     if ($conn->query($sql) === TRUE) {
-        header("Location: index.php");
+        header("Location: index.php"); // Redirect setelah berhasil hapus
         exit();
     } else {
-        echo "Error updating record: " . $conn->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 }
 
@@ -245,11 +233,10 @@ $result_guru = $conn->query($sql_guru);
                             <td><?= $row['note'] ?></td>
                             <td><?= $row['nama'] ?></td>
                             <td>
-                                <!-- Tombol edit -->
-                                <button class="btn btn-warning" data-toggle="modal" data-target="#editModal" 
-                                    onclick="openEditModal('<?= $row['id_dakos'] ?>', '<?= $row['JP'] ?>', '<?= $row['id_ruang'] ?>', '<?= $row['id_mapel'] ?>', '<?= $row['id_kelas'] ?>', '<?= $row['id_guru'] ?>', '<?= $row['note'] ?>')">
-                                    Edit
-                                </button>
+                                <!-- Tombol hapus -->
+                                <?php if(isset($_SESSION['active'])) { ?>
+                                    <a href="index.php?hapus_dakos=<?= $row['id_dakos'] ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
+                                <?php } ?>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -263,98 +250,6 @@ $result_guru = $conn->query($sql_guru);
             </tbody>
         </table></div>
 
-        <!-- Modal Edit -->
-        <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="editModalLabel">Edit Data Kelas Kosong</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="post" action="index.php">
-                            <input type="hidden" name="id_dakos" id="edit-id-dakos">
-                            
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="edit-jam-pertama" class="col-form-label">Jam Pertama</label>
-                                        <select class="form-control" name="edit_jam_pertama" id="edit-jam-pertama">
-                                            <?php for ($i = 1; $i <= 10; $i++): ?>
-                                                <option value="<?= $i ?>"><?= $i ?></option>
-                                            <?php endfor; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="edit-jam-terakhir" class="col-form-label">Jam Terakhir</label>
-                                        <select class="form-control" name="edit_jam_terakhir" id="edit-jam-terakhir">
-                                            <?php for ($i = 1; $i <= 10; $i++): ?>
-                                                <option value="<?= $i ?>"><?= $i ?></option>
-                                            <?php endfor; ?>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="edit-ruang" class="form-label">Nama Ruang</label>
-                                <select class="form-control" name="edit_id_ruang" id="edit-id-ruang">
-                                    <option value="">Pilih Ruang</option>
-                                    <?php 
-                                    while ($row_ruang = $result_ruang->fetch_assoc()): ?>
-                                        <option value="<?= $row_ruang['id_ruang'] ?>"><?= $row_ruang['nama_ruang'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="edit-kelas" class="form-label">Kelas</label>
-                                <select class="form-control" name="edit_id_kelas" id="edit-id-kelas">
-                                    <option value="">Pilih Kelas</option>
-                                    <?php while ($row_kelas = $result_kelas->fetch_assoc()): ?>
-                                        <option value="<?= $row_kelas['id_kelas'] ?>"><?= $row_kelas['nama_kelas'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="edit-guru" class="form-label">Nama Guru</label>
-                                <select class="form-control" name="edit_id_guru" id="edit-id-guru">
-                                    <option value="">Pilih Guru</option>
-                                    <?php while ($row_guru = $result_guru->fetch_assoc()): ?>
-                                        <option value="<?= $row_guru['id_guru'] ?>"><?= $row_guru['nama_guru'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="edit-mapel" class="form-label">Nama Mata Pelajaran</label>
-                                <select class="form-control" name="edit_id_mapel" id="edit-id-mapel">
-                                    <option value="">Pilih Mata Pelajaran</option>
-                                    <?php while ($row_mapel = $result_mapel->fetch_assoc()): ?>
-                                        <option value="<?= $row_mapel['id_mapel'] ?>"><?= $row_mapel['nama_mapel'] ?></option>
-                                    <?php endwhile; ?>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="edit-note" class="col-form-label">Catatan:</label>
-                                <textarea class="form-control" name="edit_note" id="edit-note"></textarea>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" name="edit_dakos" class="btn btn-primary">Simpan Perubahan</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
     <!-- Div kosong untuk menguji footer -->
@@ -367,21 +262,6 @@ $result_guru = $conn->query($sql_guru);
     <script>
         // Set tanggal saat ini
         document.getElementById('current-date').textContent = formatDate();
-    </script>
-    <script>
-        function openEditModal(id_dakos, JP, id_ruang, id_mapel, id_kelas, id_guru, note) {
-        document.getElementById('edit-id-dakos').value = id_dakos;
-        
-        const [jam_pertama, jam_terakhir] = JP.split('-');
-        document.getElementById('edit-jam-pertama').value = jam_pertama;
-        document.getElementById('edit-jam-terakhir').value = jam_terakhir;
-        
-        document.getElementById('edit-id-ruang').value = id_ruang;
-        document.getElementById('edit-id-mapel').value = id_mapel;
-        document.getElementById('edit-id-kelas').value = id_kelas;
-        document.getElementById('edit-id-guru').value = id_guru;
-        document.getElementById('edit-note').value = note;
-    }
     </script>
 </body>
 <footer class="bg-dark text-white text-center py-3 mt-4">

@@ -17,6 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows == 1) {
         $user = $result->fetch_assoc();
         if ($password = $user['password']) { //ganti kalau encrypsi if(password_verify($password,$user['password']))
+            $_SESSION['id_user'] = $user['id_user'];
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['id_role'] = $user['id_role'];
             $_SESSION['active'] = True;

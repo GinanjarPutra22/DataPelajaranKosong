@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($password = $user['password']) { //ganti kalau encrypsi if(password_verify($password,$user['password']))
             $_SESSION['nama'] = $user['nama'];
             $_SESSION['id_role'] = $user['id_role'];
+            $_SESSION['active'] = True;
             // var_dump($user['id_role']);die;
             if ($user['id_role'] != 1) {
                 header("Location: ../admin/index.php"); 

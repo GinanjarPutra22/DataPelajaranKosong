@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +31,12 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="btn btn-primary" href="login.php">Login</a>
+                    <?php 
+                    if(isset($_SESSION['id_role'])) {?>
+                        <a class="btn btn-primary" href="auth/logout.php">Logout</a>
+                    <?php }else{?>
+                        <a class="btn btn-primary" href="auth/index.php">Login</a>
+                    <?php }?>
                 </li>
             </ul>
         </div>
@@ -38,6 +46,9 @@
             <h1>Selamat Datang di Dapekos</h1>
             <h5><p id="current-date"></p></h5>
         </div>
+        <?php if(isset($_SESSION['active'])) {?>
+            <button class="btn btn-primary">tambah data</button>
+        <?php }?>
         <div class="container table-responsive mt-3 pt-5">
             <table class="table table-bordered">
             <thead>
@@ -49,14 +60,31 @@
                     <th>Mapel</th>
                     <th>Catatan</th>
                     <th>Pencatat</th>
-                    <th>Aksi</th>
+                    <?php 
+                    if(isset($_SESSION['active'])) {?>
+                        <th>Aksi</th>
+                    <?php }?>
                 </tr>
             </thead>
             <tbody>
-                <!-- Tambahkan baris data di sini -->
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <?php 
+                    if(isset($_SESSION['active'])) {?>
+                        <td>
+                            <button href="" class="btn btn-primary">Edit</button>
+                            <button href="" class="btn btn-danger">hapus</button>
+                        </td>
+                    <?php }?>
+                </tr>
             </tbody>
         </table></div>
-        <a href="auth/logout.php">logout user</a>
 
     <!-- Div kosong untuk menguji footer -->
     <div class="test-space"></div>
@@ -76,4 +104,3 @@
         </p>
 </footer>
 </html>
->>>>>>> 70d4d9fd4c6fb1672ef237916d8e6f4bfacaa59c

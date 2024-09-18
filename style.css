@@ -1,0 +1,60 @@
+/* Tambahkan font Google untuk Dapekos */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+/* Atur tampilan navbar */
+.navbar {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Font untuk Dapekos */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Buat navbar tetap di atas */
+.navbar-fixed-top {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030; /* Atur agar navbar berada di atas elemen lain */
+}
+
+/* Pastikan navbar tidak menutupi konten lain */
+body {
+    padding-top: 56px; /* Sesuaikan dengan tinggi navbar */
+}
+
+/* Responsif untuk konten utama */
+.container {
+    max-width: 100%;
+}
+
+/* Responsif untuk tabel */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* Tambahkan padding untuk konten utama */
+.pt-3 {
+    padding-top: 1rem !important;
+}
+
+/* Gaya untuk footer gelap */
+footer {
+    background-color: #343a40; /* Warna latar belakang gelap */
+    color: #ffffff; /* Warna teks putih */
+}
+
+footer a {
+    color: #007bff; /* Biru Bootstrap */
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Gaya untuk div kosong */
+.test-space {
+    height: 600px; /* Sesuaikan tinggi sesuai kebutuhan untuk pengujian */
+}

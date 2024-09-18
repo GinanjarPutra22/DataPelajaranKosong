@@ -59,3 +59,25 @@ footer a:hover {
     height: 600px; /* Sesuaikan tinggi sesuai kebutuhan untuk pengujian */
 }
 
+.floating-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.floating-btn:hover {
+    background-color: #004c9d;
+}

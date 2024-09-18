@@ -68,6 +68,7 @@ $result_guru = $conn->query($sql_guru);
     <title>Dapekos</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <script>
         function formatDate() {
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
@@ -106,7 +107,7 @@ $result_guru = $conn->query($sql_guru);
             <h5><p id="current-date"></p></h5>
         </div>
         <?php if(isset($_SESSION['active'])) {?>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Tambah Data</button>
+            <button class="floating-btn" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i></button>
         <?php }?>
 
         <!-- Modal Start -->

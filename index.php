@@ -47,8 +47,80 @@ session_start();
             <h5><p id="current-date"></p></h5>
         </div>
         <?php if(isset($_SESSION['active'])) {?>
-            <button class="btn btn-primary">tambah data</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Tambah Data</button>
         <?php }?>
+
+
+        <!-- Modal Start -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Tambah Data Kelas Kosong</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+<!-- JAm -->
+                <div class="d-flex flex-row justify-content-between">
+                <div class="form-group d-flex flex-column">
+                    <label for="recipient-name" class="col-form-label">Jam Pertama</label>
+                    <select class="form-select form-control" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <div class="form-group d-flex flex-column">
+                    <label for="recipient-name" class="col-form-label">Jam Terakhir</label>
+                    <select class="form-select form-control" aria-label="Default select example">
+                        <option selected>Pilih Jam Terakir</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                </div>
+<!-- Ruang -->
+                <div class="form-group d-flex flex-column">
+                    <label for="recipient-name" class="col-form-label">Ruang Kelas</label>
+                    <select class="form-select form-control" aria-label="Default select example">
+                        <option selected>Pilih Kelas</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                
+                <!-- Nama Guru -->
+                <div class="mb-3">
+                    <label for="NamaGuru" class="form-label">Nama Guru</label>
+                    <input type="text" class="form-control" id="NamaGuru" placeholder="Masukan Nama Guru">
+                </div>
+
+                  <!-- Mapel -->
+                  <div class="mb-3">
+                    <label for="Mapel" class="form-label">Mata Pelajaran</label>
+                    <input type="text" class="form-control" id="Mapel" placeholder="Masukan Mata Pelajaran">
+                </div>
+
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label text-bold">Message:</label>
+                    <textarea class="form-control" id="message-text"></textarea>
+                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Catatan</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!-- Modal End -->
         <div class="container table-responsive mt-3 pt-5">
             <table class="table table-bordered">
             <thead>

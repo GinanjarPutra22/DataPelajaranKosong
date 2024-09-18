@@ -46,17 +46,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <title>Login</title>
+    <style>
+        .spes {
+    padding-top: 141px;
+    padding-bottom: auto;
+}
+    </style>
 </head>
-<body>
-    <section class="vh-200" style="background-color: #9A616D;">
-        <div class="container py-5 h-100">
+<body style="background-color: #212529;">
+    <section >
+        <div class="container spes">
             <div class="row d-flex justify-content-center align-items-center h-150">
             <div class="col col-xl-10">
                 <div class="card" style="border-radius: 1rem;">
                 <div class="row g-0">
-                    <div class="col-md-6 col-lg-5 d-none d-md-block">
-                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                            alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
+                    <div class="col-md-6 col-lg-5 d-none d-md-block pb-4 pt-4 ps-4">
+                    <img src="../img/lonesaten.png" alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                     </div>
                     <div class="col-md-6 col-lg-7 d-flex align-items-center">
                         <div class="card-body p-4 p-lg-5 text-black">

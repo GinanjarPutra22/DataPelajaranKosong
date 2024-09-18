@@ -15,7 +15,7 @@ if (isset($_POST['tmbh_dakos'])) {
     $note = $_POST['note'];
     $waktu = date('Y-m-d');
 
-    $sql = "INSERT INTO Dakos (JP, id_ruang, id_mapel, id_kelas, id_guru, id_user, note, waktu) 
+    $sql = "INSERT INTO dakos (JP, id_ruang, id_mapel, id_kelas, id_guru, id_user, note, waktu) 
             VALUES ('$JP', '$id_ruang', '$id_mapel', '$id_kelas', '$id_guru', '$id_user','$note','$waktu')";
     if ($conn->query($sql) === TRUE) {
         header("Location: index.php");
@@ -25,12 +25,13 @@ if (isset($_POST['tmbh_dakos'])) {
     }
 }
 
+// Proses Hapus Data
 if (isset($_GET['hapus_dakos'])) {
     $id_dakos = $_GET['hapus_dakos'];
 
     $sql = "DELETE FROM Dakos WHERE id_dakos = '$id_dakos'";
     if ($conn->query($sql) === TRUE) {
-        header("Location: index.php"); // Redirect setelah berhasil hapus
+        header("Location: index.php");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
@@ -38,26 +39,26 @@ if (isset($_GET['hapus_dakos'])) {
 }
 
 // Query Data
-$sql_dakos = "SELECT * FROM Dakos 
-              INNER JOIN Ruang ON Dakos.id_ruang = Ruang.id_ruang
-              INNER JOIN Mapel ON Dakos.id_mapel = Mapel.id_mapel
-              INNER JOIN Kelas ON Dakos.id_kelas = Kelas.id_kelas
-              INNER JOIN Guru ON Dakos.id_guru = Guru.id_guru
-              INNER JOIN Users ON Dakos.id_user = Users.id_user
-              WHERE Dakos.waktu = CURDATE()";
-$dakos = $conn->query($sql_dakos);
+$sql_dakos = "SELECT * FROM dakos 
+              INNER JOIN ruang ON dakos.id_ruang = ruang.id_ruang
+              INNER JOIN mapel ON dakos.id_mapel = mapel.id_mapel
+              INNER JOIN kelas ON dakos.id_kelas = kelas.id_kelas
+              INNER JOIN guru ON dakos.id_guru = guru.id_guru
+              INNER JOIN users ON dakos.id_user = users.id_user
+              WHERE dakos.waktu = CURDATE()";
+$dakos = $conn->query($sql_dakos) or die($conn->error);
 
-$sql_ruang = "SELECT id_ruang, nama_ruang FROM Ruang";
-$result_ruang = $conn->query($sql_ruang);
+$sql_ruang = "SELECT id_ruang, nama_ruang FROM ruang";
+$result_ruang = $conn->query($sql_ruang) or die($conn->error);
 
-$sql_mapel = "SELECT id_mapel, nama_mapel FROM Mapel";
-$result_mapel = $conn->query($sql_mapel);
+$sql_mapel = "SELECT id_mapel, nama_mapel FROM mapel";
+$result_mapel = $conn->query($sql_mapel) or die($conn->error);
 
-$sql_kelas = "SELECT id_kelas, nama_kelas FROM Kelas";
-$result_kelas = $conn->query($sql_kelas);
+$sql_kelas = "SELECT id_kelas, nama_kelas FROM kelas";
+$result_kelas = $conn->query($sql_kelas) or die($conn->error);
 
-$sql_guru = "SELECT id_guru, nama_guru FROM Guru";
-$result_guru = $conn->query($sql_guru);
+$sql_guru = "SELECT id_guru, nama_guru FROM guru";
+$result_guru = $conn->query($sql_guru) or die($conn->error);
 ?>
 
 <!DOCTYPE html>
@@ -110,6 +111,7 @@ $result_guru = $conn->query($sql_guru);
             <button class="floating-btn" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i></button>
         <?php }?>
 
+
         <!-- Modal Start -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -126,7 +128,7 @@ $result_guru = $conn->query($sql_guru);
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Jam Pertama</label>
-                            <select class="form-select form-control" name="jam_pertama" aria-label="Default select example">
+                            <select class="form-select form-control" name="jam_pertama" aria-label="Default select example" required>
                                 <option value="">Pilih Jam Pertama</option>
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
                                     <option value="<?= $i ?>"><?= $i ?></option>
@@ -137,7 +139,7 @@ $result_guru = $conn->query($sql_guru);
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="recipient-name" class="col-form-label">Jam Terakhir</label>
-                            <select class="form-select form-control" name="jam_terakhir" aria-label="Default select example">
+                            <select class="form-select form-control" name="jam_terakhir" aria-label="Default select example" required>
                                 <option value="">Pilih Jam Terakhir</option>
                                 <?php for ($i = 1; $i <= 10; $i++): ?>
                                     <option value="<?= $i ?>"><?= $i ?></option>
@@ -149,7 +151,7 @@ $result_guru = $conn->query($sql_guru);
 
                 <div class="mb-3">
                     <label class="form-label">Nama Ruang</label>
-                    <select class="form-control" name="id_ruang" >
+                    <select class="form-control" name="id_ruang" required>
                         <option value="">Pilih Ruang</option>
                         <?php while ($row_ruang = $result_ruang->fetch_assoc()): ?>
                             <option value="<?= $row_ruang['id_ruang'] ?>"><?= $row_ruang['nama_ruang'] ?></option>
@@ -159,17 +161,17 @@ $result_guru = $conn->query($sql_guru);
 
                 <div class="mb-3">
                     <label class="form-label">Kelas</label>
-                    <select class="form-control" name="id_kelas" >
+                    <select class="form-control" name="id_kelas" required>
                         <option value="">Pilih Kelas</option>
                         <?php while ($row_kelas = $result_kelas->fetch_assoc()): ?>
-                            <option value="<?= $row_kelas['id_kelas'] ?>"><?= $row_kelas['nama_kelas'] ?></option>
+                                                    <option value="<?= $row_kelas['id_kelas'] ?>"><?= $row_kelas['nama_kelas'] ?></option>
                         <?php endwhile; ?>
                     </select>
                 </div>
-                
+
                 <div class="mb-3">
-                    <label for="NamaGuru" class="form-label">Nama Guru</label>
-                    <select class="form-control" name="id_guru" >
+                    <label class="form-label">Nama Guru</label>
+                    <select class="form-control" name="id_guru" required>
                         <option value="">Pilih Guru</option>
                         <?php while ($row_guru = $result_guru->fetch_assoc()): ?>
                             <option value="<?= $row_guru['id_guru'] ?>"><?= $row_guru['nama_guru'] ?></option>
@@ -178,8 +180,8 @@ $result_guru = $conn->query($sql_guru);
                 </div>
 
                 <div class="mb-3">
-                    <label for="NamaMapel" class="form-label">Nama Mata Pelajaran</label>
-                    <select class="form-control" name="id_mapel" >
+                    <label class="form-label">Nama Mata Pelajaran</label>
+                    <select class="form-control" name="id_mapel" required>
                         <option value="">Pilih Mata Pelajaran</option>
                         <?php while ($row_mapel = $result_mapel->fetch_assoc()): ?>
                             <option value="<?= $row_mapel['id_mapel'] ?>"><?= $row_mapel['nama_mapel'] ?></option>
@@ -188,12 +190,12 @@ $result_guru = $conn->query($sql_guru);
                 </div>
 
                 <div class="form-group">
-                    <label for="message-text" class="col-form-label text-bold">Message:</label>
+                    <label for="message-text" class="col-form-label text-bold">Catatan:</label>
                     <textarea class="form-control" name="note" id="message-text"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
                 <button type="submit" name="tmbh_dakos" class="btn btn-primary">Simpan</button>
             </div>
                 </form>
@@ -213,8 +215,7 @@ $result_guru = $conn->query($sql_guru);
                     <th>Mapel</th>
                     <th>Catatan</th>
                     <th>Pencatat</th>
-                    <?php 
-                    if(isset($_SESSION['active'])) {?>
+                    <?php if(isset($_SESSION['active'])) {?>
                         <th>Aksi</th>
                     <?php }?>
                 </tr>
@@ -233,29 +234,24 @@ $result_guru = $conn->query($sql_guru);
                             <td><?= $row['nama_mapel'] ?></td>
                             <td><?= $row['note'] ?></td>
                             <td><?= $row['nama'] ?></td>
-                            <td>
-                                <!-- Tombol hapus -->
-                                <?php if(isset($_SESSION['active'])) { ?>
+                            <?php if(isset($_SESSION['active'])) { ?>
+                                <td>
                                     <a href="index.php?hapus_dakos=<?= $row['id_dakos'] ?>" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus data ini?')">Hapus</a>
-                                <?php } ?>
-                            </td>
+                                </td>
+                            <?php } ?>
                         </tr>
                     <?php endwhile; ?>
             <?php else: ?>
-                <!-- Tampilkan jika tidak ada data -->
                 <tr>
-                    <td colspan="9" style="text-align: center;">Data Kosong</td>
+                    <td colspan="<?= isset($_SESSION['active']) ? '9' : '8' ?>" style="text-align: center;">Data Kosong</td>
                 </tr>
             <?php endif; ?>
-
             </tbody>
-        </table></div>
+            </table>
+        </div>
 
-
-
-    <!-- Div kosong untuk menguji footer -->
-    <div class="test-space"></div>
-        
+        <!-- Div kosong untuk menguji footer -->
+        <div class="test-space"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -266,8 +262,9 @@ $result_guru = $conn->query($sql_guru);
     </script>
 </body>
 <footer class="bg-dark text-white text-center py-3 mt-4">
-        <p class="mb-0">
-            &copy; 2024 Dapekos by Sekop2. Supported <a href="https://ayoarek.com" class="text-primary" target="_blank">Ayoarek.com</a>
-        </p>
+    <p class="mb-0">
+        &copy; 2024 Dapekos by Sekop2. Supported <a href="https://ayoarek.com" class="text-primary" target="_blank">Ayoarek.com</a>
+    </p>
 </footer>
 </html>
+

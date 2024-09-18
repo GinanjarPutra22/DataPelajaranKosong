@@ -1,9 +1,9 @@
 <?php
 // Koneksi ke database
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$database = 'Dapekos';
+$host = 'clove.iixcp.rumahweb.net';
+$user = 'ayof9739_sekop2';
+$password = '@Sekop222';
+$database = 'ayof9739_dapekos';
 $conn = new mysqli($host, $user, $password, $database);
 
 // Cek koneksi

@@ -167,7 +167,7 @@ $conn->close();
             </div>
         </div>
         <div class="table-container">
-            <table id='datatablesSimple'>
+            <table class="table table-striped" id='datatablesSimple'>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -184,7 +184,13 @@ $conn->close();
                             <td><?= htmlspecialchars($row['nama']) ?></td>
                             <td><?= htmlspecialchars($row['username']) ?></td>
                             <td><?= htmlspecialchars($row['NoWA']) ?></td>
-                            <td><?= htmlspecialchars($row['id_role']) ?></td>
+                            <td>
+                                <?php if ($row['id_role'] == 1  ){?>
+                                    User
+                                <?php }else{?>
+                                    Admin
+                                <?php }?>
+                            </td>
                         </tr>
                     <?php endwhile; ?>
                 </tbody>

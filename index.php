@@ -9,15 +9,15 @@ if (isset($_POST['tmbh_dakos'])) {
     $JP_end = $_POST['jam_terakhir'];
     $JP = "$JP_start-$JP_end";
     $id_ruang = $_POST['id_ruang'];
-    $id_mapel = $_POST['id_mapel'];
+    $nama_mapel = $_POST['nama_mapel'];
     $id_kelas = $_POST['id_kelas'];
-    $id_guru = $_POST['id_guru'];
+    $nama_guru = $_POST['nama_guru'];
     $id_user = $_SESSION['id_user'];
     $note = $_POST['note'];
     $waktu = date('Y-m-d');
 
-    $sql = "INSERT INTO dakos (JP, id_ruang, id_mapel, id_kelas, id_guru, id_user, note, waktu) 
-            VALUES ('$JP', '$id_ruang', '$id_mapel', '$id_kelas', '$id_guru', '$id_user','$note','$waktu')";
+    $sql = "INSERT INTO dakos (JP, id_ruang, nama_mapel, id_kelas, nama_guru, id_user, note, waktu) 
+            VALUES ('$JP', '$id_ruang', '$nama_mapel', '$id_kelas', '$nama_guru', '$id_user','$note','$waktu')";
     if ($conn->query($sql) === TRUE) {
         header("Location: index.php");
         exit();
@@ -42,24 +42,20 @@ if (isset($_GET['hapus_dakos'])) {
 // Query Data
 $sql_dakos = "SELECT * FROM dakos 
               INNER JOIN ruang ON dakos.id_ruang = ruang.id_ruang
-              INNER JOIN mapel ON dakos.id_mapel = mapel.id_mapel
               INNER JOIN kelas ON dakos.id_kelas = kelas.id_kelas
-              INNER JOIN guru ON dakos.id_guru = guru.id_guru
               INNER JOIN users ON dakos.id_user = users.id_user
               WHERE dakos.waktu = CURDATE()";
 $dakos = $conn->query($sql_dakos) or die($conn->error);
 
+// var_dump($dakos);die;
+
 $sql_ruang = "SELECT id_ruang, nama_ruang FROM ruang ORDER BY nama_ruang";
 $result_ruang = $conn->query($sql_ruang) or die($conn->error);
 
-$sql_mapel = "SELECT id_mapel, nama_mapel FROM mapel ORDER BY nama_mapel";
-$result_mapel = $conn->query($sql_mapel) or die($conn->error);
 
 $sql_kelas = "SELECT id_kelas, nama_kelas FROM kelas ORDER BY nama_kelas";
 $result_kelas = $conn->query($sql_kelas) or die($conn->error);
 
-$sql_guru = "SELECT id_guru, nama_guru FROM guru ORDER BY nama_guru";
-$result_guru = $conn->query($sql_guru) or die($conn->error);
 ?>
 
 <!DOCTYPE html>
@@ -177,22 +173,12 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
 
                 <div class="mb-3">
                     <label class="form-label">Nama Guru</label>
-                    <select class="form-control" name="id_guru" required>
-                        <option value="">Pilih Guru</option>
-                        <?php while ($row_guru = $result_guru->fetch_assoc()): ?>
-                            <option value="<?= $row_guru['id_guru'] ?>"><?= $row_guru['nama_guru'] ?></option>
-                        <?php endwhile; ?>
-                    </select>
+                    <input type="text" name="nama_guru" class="form-control">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Nama Mata Pelajaran</label>
-                    <select class="form-control" name="id_mapel" required>
-                        <option value="">Pilih Mata Pelajaran</option>
-                        <?php while ($row_mapel = $result_mapel->fetch_assoc()): ?>
-                            <option value="<?= $row_mapel['id_mapel'] ?>"><?= $row_mapel['nama_mapel'] ?></option>
-                        <?php endwhile; ?>
-                    </select>
+                    <input type="text" name="nama_mapel" class="form-control">
                 </div>
 
                 <div class="form-group">

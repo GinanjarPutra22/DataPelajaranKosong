@@ -7,9 +7,7 @@ include '../koneksi.php';
 // Ambil data pengguna
 $sql_select = "SELECT * FROM dakos 
               INNER JOIN ruang ON dakos.id_ruang = ruang.id_ruang
-              INNER JOIN mapel ON dakos.id_mapel = mapel.id_mapel
               INNER JOIN kelas ON dakos.id_kelas = kelas.id_kelas
-              INNER JOIN guru ON dakos.id_guru = guru.id_guru
               INNER JOIN users ON dakos.id_user = users.id_user";
 $result = $conn->query($sql_select);
 

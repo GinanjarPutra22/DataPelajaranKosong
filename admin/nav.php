@@ -13,13 +13,7 @@
           <a class="nav-link text-light " href="kelas.php">Kelas</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light " href="guru.php">Guru</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link text-light " href="ruang.php">Ruang</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light " href="mapel.php">Mapel</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light " href="users.php">User</a>

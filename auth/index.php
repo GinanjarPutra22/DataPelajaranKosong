@@ -2,6 +2,12 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
+
+// var_dump($_SESSION['active']);die;
+if (isset($_SESSION['active'])) {
+    header("Location: ../index.php");
+}
+
 include '../koneksi.php';
 
 $login_error = '';

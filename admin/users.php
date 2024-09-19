@@ -68,6 +68,8 @@ $conn->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- data table -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Registrasi dan Data Pengguna</title>
     <style>
@@ -101,11 +103,12 @@ $conn->close();
     </style>
 </head>
 <body>
+    <?php include 'nav.php';?>
     <div class="container pt-5 pb-5">
         <div class="d-flex align-items-center mb-4">
-            <a href="javascript:history.back()" class="btn btn-secondary back-button">
+            <!-- <a href="javascript:history.back()" class="btn btn-secondary back-button">
                 <i class="bi bi-arrow-left"></i> Kembali
-            </a>
+            </a> -->
             <h2 class="text-center m-0 flex-grow-1">Data Pengguna</h2>
         </div>
         <div class="card">
@@ -164,7 +167,7 @@ $conn->close();
             </div>
         </div>
         <div class="table-container">
-            <table class="table table-striped">
+            <table id='datatablesSimple'>
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -191,4 +194,7 @@ $conn->close();
 </body>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+<!-- data table -->
+<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+<script src="../datatables-simple-demo.js"></script>
 </html>

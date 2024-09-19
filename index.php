@@ -2,6 +2,7 @@
 session_start();
 include 'koneksi.php';
 
+
 // Proses Tambah Data
 if (isset($_POST['tmbh_dakos'])) {
     $JP_start = $_POST['jam_pertama'];
@@ -48,16 +49,16 @@ $sql_dakos = "SELECT * FROM dakos
               WHERE dakos.waktu = CURDATE()";
 $dakos = $conn->query($sql_dakos) or die($conn->error);
 
-$sql_ruang = "SELECT id_ruang, nama_ruang FROM ruang";
+$sql_ruang = "SELECT id_ruang, nama_ruang FROM ruang ORDER BY nama_ruang";
 $result_ruang = $conn->query($sql_ruang) or die($conn->error);
 
-$sql_mapel = "SELECT id_mapel, nama_mapel FROM mapel";
+$sql_mapel = "SELECT id_mapel, nama_mapel FROM mapel ORDER BY nama_mapel";
 $result_mapel = $conn->query($sql_mapel) or die($conn->error);
 
-$sql_kelas = "SELECT id_kelas, nama_kelas FROM kelas";
+$sql_kelas = "SELECT id_kelas, nama_kelas FROM kelas ORDER BY nama_kelas";
 $result_kelas = $conn->query($sql_kelas) or die($conn->error);
 
-$sql_guru = "SELECT id_guru, nama_guru FROM guru";
+$sql_guru = "SELECT id_guru, nama_guru FROM guru ORDER BY nama_guru";
 $result_guru = $conn->query($sql_guru) or die($conn->error);
 ?>
 
@@ -67,6 +68,8 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dapekos</title>
+    <!-- data table -->
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -83,8 +86,9 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
         }
     </script>
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+<body class="">
+    <nav class="navbar container-fluid navbar-expand-lg navbar-dark bg-dark navbar-fixed-top">
+        <div class="container">
         <a class="navbar-brand" href="#">Dapekos</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -93,7 +97,7 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <?php 
-                    if(isset($_SESSION['id_role'])) {?>
+                    if(isset($_SESSION['active'])) {?>
                         <a class="btn btn-primary" href="auth/logout.php">Logout</a>
                     <?php }else{?>
                         <a class="btn btn-primary" href="auth/index.php">Login</a>
@@ -101,6 +105,8 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
                 </li>
             </ul>
         </div>
+        </div>
+        
     </nav>
     <div class="container mt-5 pt-2">
         <div class="text-center mb-4">
@@ -203,8 +209,9 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
         </div>
         </div>
         <!-- Modal End -->
+         
         <div class="container table-responsive mt-3 pt-5">
-            <table class="table table-bordered">
+            <table class="table table-bordered" id="datatablesSimple">
             <thead>
                 <tr>
                     <th>No</th>
@@ -256,6 +263,9 @@ $result_guru = $conn->query($sql_guru) or die($conn->error);
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- data tables -->
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="datatables-simple-demo.js"></script>
     <script>
         // Set tanggal saat ini
         document.getElementById('current-date').textContent = formatDate();
